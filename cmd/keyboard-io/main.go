@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	midi.SeedRandomVelocitySource()
-	fmt.Println(midi.RandomVelocity())
+	velocityRandomizer := midi.NewVelocityRandomizer()
+	fmt.Println(velocityRandomizer.SafeRandomVelocity())
 }

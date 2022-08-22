@@ -1,10 +1,5 @@
 package midi
 
-import (
-	"math/rand"
-	"time"
-)
-
 // Velocity represents the strength of an individual MIDI note. Valid values are between 0 and 127 inclusive.
 type Velocity int
 
@@ -34,28 +29,4 @@ func NewVelocity(vel int) Velocity {
 		return FullVelocity
 	}
 	return Velocity(vel)
-}
-
-// RandomVelocityInRange returns a random note velocity between the provided minimum and maximum values.
-func RandomVelocityInRange(min Velocity, max Velocity) Velocity {
-	minInt := int(min)
-	maxInt := int(max)
-	if maxInt < 0 {
-		maxInt = 0
-	}
-	randVelInt := rand.Intn(maxInt-minInt) + minInt
-	return NewVelocity(randVelInt)
-}
-
-// RandomVelocity returns a random note velocity between the overall lowest and highest values.
-func RandomVelocity() Velocity {
-	return RandomVelocityInRange(ZeroVelocity, FullVelocity)
-}
-
-// Seeds the randomizer for creating random velocities.
-//
-// It is IMPERATIVE to call this before generating random velocities so the results can be different
-// for each program run.
-func SeedRandomVelocitySource() {
-	rand.Seed(time.Now().UnixMicro())
 }

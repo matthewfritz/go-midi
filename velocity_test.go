@@ -31,30 +31,3 @@ func Test_NewVelocity(t *testing.T) {
 		})
 	}
 }
-
-func Test_RandomVelocityInRange(t *testing.T) {
-	t.Parallel()
-
-	// seed the source
-	SeedRandomVelocitySource()
-
-	minVelocity := NewVelocity(61)
-	maxVelocity := NewVelocity(63)
-
-	got := RandomVelocityInRange(minVelocity, maxVelocity)
-	if got < minVelocity || got > maxVelocity {
-		t.Fatalf("expected random custom ranged velocity between %v and %v, got %v", minVelocity, maxVelocity, got)
-	}
-}
-
-func Test_RandomVelocity(t *testing.T) {
-	t.Parallel()
-
-	// seed the source
-	SeedRandomVelocitySource()
-
-	got := RandomVelocity()
-	if got < ZeroVelocity || got > FullVelocity {
-		t.Fatalf("expected random ranged velocity between %v and %v, got %v", ZeroVelocity, FullVelocity, got)
-	}
-}
