@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/matthewfritz/go-midi"
+)
 
 func main() {
-	fmt.Println("Hello world")
+	midi.SeedRandomVelocitySource()
+	fmt.Println(midi.RandomVelocity())
 }
