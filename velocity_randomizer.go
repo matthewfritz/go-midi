@@ -1,9 +1,16 @@
 package midi
 
 import (
+	"errors"
+	"fmt"
 	"math/rand"
 	"sync"
 	"time"
+)
+
+var (
+	// ErrRandomVelocity is returned when an error occurs generating a random velocity value
+	ErrRandomVelocity error = errors.New("invalid random velocity")
 )
 
 // VelocityRandomizer generates random velocity values for MIDI notes.
@@ -24,25 +31,30 @@ func NewVelocityRandomizer() VelocityRandomizer {
 
 // RandomVelocityInRange returns a random note velocity between the provided minimum and maximum values.
 // This method is NOT concurrency-safe.
-func (vr *VelocityRandomizer) RandomVelocityInRange(min Velocity, max Velocity) Velocity {
+func (vr *VelocityRandomizer) RandomVelocityInRange(min Velocity, max Velocity) (Velocity, error) {
 	minInt := int(min)
 	maxInt := int(max)
-	if maxInt < 0 {
-		maxInt = 0
+	if minInt > maxInt {
+		// prevent a panic
+		return NewVelocity(0), fmt.Errorf("minimum velocity cannot be greater than maximum velocity: %w", ErrRandomVelocity)
+	}
+	if minInt == maxInt {
+		// range only allows for a single possible value
+		return NewVelocity(minInt), nil
 	}
 	randVelInt := vr.randomizer.Intn(maxInt-minInt) + minInt
-	return NewVelocity(randVelInt)
+	return NewVelocity(randVelInt), nil
 }
 
 // RandomVelocity returns a random note velocity between the overall lowest and highest values.
 // This method is NOT concurrency-safe.
-func (vr *VelocityRandomizer) RandomVelocity() Velocity {
+func (vr *VelocityRandomizer) RandomVelocity() (Velocity, error) {
 	return vr.RandomVelocityInRange(ZeroVelocity, FullVelocity)
 }
 
 // SafeRandomVelocityInRange returns a random note velocity between the provided minimum and maximum values.
 // This method is concurrency-safe.
-func (vr *VelocityRandomizer) SafeRandomVelocityInRange(min Velocity, max Velocity) Velocity {
+func (vr *VelocityRandomizer) SafeRandomVelocityInRange(min Velocity, max Velocity) (Velocity, error) {
 	vr.mutex.Lock()
 	defer vr.mutex.Unlock()
 	return vr.RandomVelocityInRange(min, max)
@@ -50,7 +62,7 @@ func (vr *VelocityRandomizer) SafeRandomVelocityInRange(min Velocity, max Veloci
 
 // SafeRandomVelocity returns a random note velocity between the overall lowest and highest values.
 // This method is concurrency-safe.
-func (vr *VelocityRandomizer) SafeRandomVelocity() Velocity {
+func (vr *VelocityRandomizer) SafeRandomVelocity() (Velocity, error) {
 	vr.mutex.Lock()
 	defer vr.mutex.Unlock()
 	return vr.RandomVelocity()
