@@ -1,4 +1,4 @@
-package midi
+package midiv1
 
 // Velocity represents the strength of an individual MIDI note. Valid values are between 0 and 127 inclusive.
 type Velocity int

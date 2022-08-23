@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/matthewfritz/go-midi"
+	midi "github.com/matthewfritz/go-midi/midiv1"
 )
 
 func main() {
