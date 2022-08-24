@@ -31,7 +31,10 @@ func (nom NoteOnMessage) MarshalMIDI() ([]byte, error) {
 	}, nil
 }
 
-// UnmarshalMIDI unmarshalls raw bytes into a NoteOnMessage struct pointer
+// UnmarshalMIDI unmarshalls raw bytes into a NoteOnMessage struct pointer. Note-On messages are
+// represented by three bytes (left to right): status/channel, note number, note velocity.
+//
+// Example: []byte{0b10010001, 0b01000000, 0b00100000}
 func (nom *NoteOnMessage) UnmarshalMIDI(b []byte) error {
 	// a Note-On message sequence uses three bytes
 	if len(b) != 3 {
