@@ -35,6 +35,8 @@ func (nom NoteOnMessage) MarshalMIDI() ([]byte, error) {
 // represented by three bytes (left to right): status/channel, note number, note velocity.
 //
 // Example: []byte{0b10010001, 0b01000000, 0b00100000}
+//
+// The example forms a Note-On message for channel 2 (index 1), note number 64, velocity value 32.
 func (nom *NoteOnMessage) UnmarshalMIDI(b []byte) error {
 	// a Note-On message sequence uses three bytes
 	if len(b) != 3 {
@@ -42,15 +44,14 @@ func (nom *NoteOnMessage) UnmarshalMIDI(b []byte) error {
 	}
 
 	// make sure this is a status byte with the proper MSB
-	// https://medium.com/learning-the-go-programming-language/bit-hacking-with-go-e0acee258827
-	if b[0]&byte(StatusMessageMSB) != byte(StatusMessageMSB) {
+	if !ByteHasStatusMSB(b[0]) {
 		return fmt.Errorf("note-on messages must have a status MSB: %w", ErrUnmarshallingMessage)
 	}
 
 	// retrieve the channel nibble of the status byte to form the Channel value
-	channel, err := NewChannelFromByte(b[0] & byte(MaxChannel))
+	channel, err := ParseChannelFromStatusByte(b[0])
 	if err != nil {
-		return fmt.Errorf("invalid channel (%v) from status byte: %w", err, ErrUnmarshallingMessage)
+		return err
 	}
 	nom.Channel = channel
 

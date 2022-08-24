@@ -5,6 +5,58 @@ import (
 	"testing"
 )
 
+func Test_ByteHasDataMSB(t *testing.T) {
+	t.Parallel()
+	tests := map[string]struct {
+		statusByte byte
+		expected   bool
+	}{
+		"byte has a data MSB": {
+			statusByte: 0b00010101,
+			expected:   true,
+		},
+		"byte does not have a data MSB": {
+			statusByte: 0b10010101,
+			expected:   false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := ByteHasDataMSB(test.statusByte)
+			if got != test.expected {
+				t.Fatalf("expected %v, got %v", test.expected, got)
+			}
+		})
+	}
+}
+
+func Test_ByteHasStatusMSB(t *testing.T) {
+	t.Parallel()
+	tests := map[string]struct {
+		statusByte byte
+		expected   bool
+	}{
+		"byte has a status MSB": {
+			statusByte: 0b10010101,
+			expected:   true,
+		},
+		"byte does not have a status MSB": {
+			statusByte: 0b00010101,
+			expected:   false,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := ByteHasStatusMSB(test.statusByte)
+			if got != test.expected {
+				t.Fatalf("expected %v, got %v", test.expected, got)
+			}
+		})
+	}
+}
+
 func Test_NewChannel(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
@@ -166,6 +218,40 @@ func Test_NewNoteFromByte(t *testing.T) {
 			}
 			if got != test.expectedNote {
 				t.Fatalf("expected %v, got %v", test.expectedNote, got)
+			}
+		})
+	}
+}
+
+func Test_ParseChannelFromStatusByte(t *testing.T) {
+	t.Parallel()
+	tests := map[string]struct {
+		statusByte      byte
+		expectedChannel Channel
+		err             error
+	}{
+		"channel is intended value": {
+			statusByte:      0b10010101,
+			expectedChannel: 5,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got, err := ParseChannelFromStatusByte(test.statusByte)
+			if test.err == nil && err != nil {
+				t.Fatalf("expected nil error, got %v", err)
+			}
+			if test.err != nil {
+				if err == nil {
+					t.Fatalf("expected non-nil %v error, got nil error", test.err)
+				}
+				if !errors.Is(err, test.err) {
+					t.Fatalf("expected %v error, got %v", test.err, err)
+				}
+			}
+			if got != test.expectedChannel {
+				t.Fatalf("expected %v, got %v", test.expectedChannel, got)
 			}
 		})
 	}

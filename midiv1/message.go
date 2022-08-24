@@ -33,6 +33,17 @@ const (
 	DataMessageMSB MessageType = 0b0
 )
 
+// ByteHasDataMSB returns whether the most-significant bit of the supplied byte is a MIDI data bit.
+func ByteHasDataMSB(b byte) bool {
+	return !ByteHasStatusMSB(b)
+}
+
+// ByteHasStatusMSB returns whether the most-significant bit of the supplied byte is a MIDI status bit.
+func ByteHasStatusMSB(b byte) bool {
+	// https://medium.com/learning-the-go-programming-language/bit-hacking-with-go-e0acee258827
+	return (b & byte(StatusMessageMSB)) == byte(StatusMessageMSB)
+}
+
 // Status represents the first four bits of the MIDI message status byte (message type and code).
 //
 // Example: 0b11010000 (Status message for Channel Pressure)
@@ -70,6 +81,16 @@ func NewChannelFromByte(channel byte) (Channel, error) {
 		return MinChannel, fmt.Errorf("valid channels are between %d and %d, inclusive: %w", MinChannel, MaxChannel, ErrInvalidChannel)
 	}
 	return Channel(channel), nil
+}
+
+// ParseChannelFromStatusByte returns a Channel by AND-ing the channel nibble in the status byte with its maximum value.
+func ParseChannelFromStatusByte(status byte) (Channel, error) {
+	// https://medium.com/learning-the-go-programming-language/bit-hacking-with-go-e0acee258827
+	channel, err := NewChannelFromByte(status & byte(MaxChannel))
+	if err != nil {
+		return MinChannel, fmt.Errorf("invalid channel (%v) from status byte: %w", err, ErrUnmarshallingMessage)
+	}
+	return channel, nil
 }
 
 // Note represents the note number of the MIDI message.
