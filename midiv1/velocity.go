@@ -1,4 +1,4 @@
-package midi
+package midiv1
 
 // Velocity represents the strength of an individual MIDI note. Valid values are between 0 and 127 inclusive.
 type Velocity int
@@ -26,6 +26,17 @@ func NewVelocity(vel int) Velocity {
 		return ZeroVelocity
 	}
 	if vel > int(FullVelocity) {
+		return FullVelocity
+	}
+	return Velocity(vel)
+}
+
+// NewVelocityFromByte returns a Velocity based on the byte argument, clamped within the overall minimum and maximum values.
+func NewVelocityFromByte(vel byte) Velocity {
+	if vel < byte(ZeroVelocity) {
+		return ZeroVelocity
+	}
+	if vel > byte(FullVelocity) {
 		return FullVelocity
 	}
 	return Velocity(vel)

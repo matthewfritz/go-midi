@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/matthewfritz/go-midi"
+	"github.com/matthewfritz/go-midi/midiv1"
 )
 
 func main() {
-	velocityRandomizer := midi.NewVelocityRandomizer()
+	velocityRandomizer := midiv1.NewVelocityRandomizer()
 
 	// expect a note number and velocity flag
 	noteNumPtr := flag.Int("note", 0, "MIDI note number")
@@ -17,7 +17,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Printf("MIDI note number: %d\n", *noteNumPtr)
-	fmt.Printf("MIDI note velocity: %d\n", midi.NewVelocity(*velocityNumPtr))
+	fmt.Printf("MIDI note velocity: %d\n", midiv1.NewVelocity(*velocityNumPtr))
 
 	randomVel, err := velocityRandomizer.SafeRandomVelocity()
 	if err != nil {
