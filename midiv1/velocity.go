@@ -30,3 +30,14 @@ func NewVelocity(vel int) Velocity {
 	}
 	return Velocity(vel)
 }
+
+// NewVelocityFromByte returns a Velocity based on the byte argument, clamped within the overall minimum and maximum values.
+func NewVelocityFromByte(vel byte) Velocity {
+	if vel < byte(ZeroVelocity) {
+		return ZeroVelocity
+	}
+	if vel > byte(FullVelocity) {
+		return FullVelocity
+	}
+	return Velocity(vel)
+}
