@@ -7,7 +7,7 @@ const (
 	NoteOnMessageCode Nibble = 0b00010000
 
 	// NoteOnMessageStatusNibble represents the status nibble within the status byte
-	NoteOnMessageStatusNibble Status = Status(StatusMessageMSB) + Status(NoteOnMessageCode)
+	NoteOnMessageStatusNibble Status = Status(StatusMessageMSB) | Status(NoteOnMessageCode)
 )
 
 // NoteOnMessage represents a Note-On Channel Voice message.
@@ -25,7 +25,7 @@ type NoteOnMessage struct {
 // MarshalMIDI marshalls a NoteOnMessage MIDI message into its raw bytes
 func (nom NoteOnMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{
-		byte(NoteOnMessageStatusNibble) + byte(nom.Channel),
+		byte(NoteOnMessageStatusNibble) | byte(nom.Channel),
 		byte(nom.Note),
 		byte(nom.Velocity),
 	}, nil
@@ -53,17 +53,20 @@ func (nom *NoteOnMessage) UnmarshalMIDI(b []byte) error {
 	if err != nil {
 		return err
 	}
-	nom.Channel = channel
 
 	// form the note number
 	note, err := NewNoteFromByte(b[1])
 	if err != nil {
 		return fmt.Errorf("invalid note number (%v) from note byte: %w", err, ErrUnmarshallingMessage)
 	}
-	nom.Note = note
 
 	// form the velocity
-	nom.Velocity = NewVelocityFromByte(b[2])
+	vel := NewVelocityFromByte(b[2])
 
+	*nom = NoteOnMessage{
+		Channel:  channel,
+		Note:     note,
+		Velocity: vel,
+	}
 	return nil
 }
