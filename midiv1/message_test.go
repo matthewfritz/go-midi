@@ -57,6 +57,30 @@ func Test_ByteHasStatusMSB(t *testing.T) {
 	}
 }
 
+func Test_MakeStatusByte(t *testing.T) {
+	t.Parallel()
+	tests := map[string]struct {
+		statusNibble  Status
+		channelNibble Channel
+		expected      byte
+	}{
+		"status byte is expected value": {
+			statusNibble:  Status(0b10010000),
+			channelNibble: Channel(5),
+			expected:      0b10010101,
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := MakeStatusByte(test.statusNibble, test.channelNibble)
+			if got != test.expected {
+				t.Fatalf("expected %v, got %v", test.expected, got)
+			}
+		})
+	}
+}
+
 func Test_NewChannel(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
