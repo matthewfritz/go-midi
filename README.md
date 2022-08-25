@@ -4,11 +4,70 @@ Go implementation of a library to represent MIDI data.
 
 This began as a passion project to learn and implement a workable amount of the MIDI 1.0 specification from scratch so I could have complete control over certain specific digital instruments and DAW controls.
 
+## Table of Contents
+
+   * [Installation](#installation)
+   * [Roadmap](#roadmap)
+      * [MIDI 1.0 Roadmap](#midi-10-roadmap)
+      * [MIDI 2.0 Roadmap](#midi-20-roadmap)
+   * [Resources](#resources)
+      * [Official Specifications](#official-specifications)
+      * [Books](#books)
+      * [Assorted MIDI and Digital Music Information](#assorted-midi-and-digital-music-information)
+         * [Assorted MIDI 1.0 Information](#assorted-midi-10-information)
+         * [Digital Music Information](#digital-music-information)
+
 ## Installation
 
 ```
 go get https://github.com/matthewfritz/go-midi
 ```
+
+## Roadmap
+
+### MIDI 1.0 Roadmap
+
+#### Channel Voice Messages
+
+   * ✅ Note-On
+   * ✅ Note-Off
+   * Polyphonic Key Pressure
+   * Channel Pressure
+   * Program Change
+   * Pitch Bend Change
+   * Control Change
+
+#### Channel Voice Message Modifiers
+
+   * ✅ Velocity
+   * ✅ Running Status
+   * Pitch
+   * Modulation
+
+#### System Common Messages
+
+   * MTC Quarter Frame
+   * Song Position Pointer
+   * Song Select
+   * Tune Request
+   * End of Exclusive Messages (EOX)
+
+#### System Timing Clock Messages
+
+   * MIDI Start
+   * MIDI Stop
+   * MIDI Continue
+   * Active Sensing
+   * System Reset
+
+#### System Exclusive Messages
+
+   * Universal Non-Real-Time
+   * Universal Real-Time
+
+### MIDI 2.0 Roadmap
+
+Once the [MIDI 1.0 Roadmap](#midi-10-roadmap) is at least halfway done I will start planning out the roadmap for implementing the current MIDI 2.0 specification.
 
 ## Resources
 
