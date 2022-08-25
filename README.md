@@ -4,6 +4,8 @@ Go implementation of a library to represent MIDI data.
 
 This began as a passion project to learn and implement a workable amount of the MIDI 1.0 specification from scratch so I could have complete control over certain specific digital instruments and DAW controls.
 
+I had been trying to solve a very specific problem I was having with a hardware MIDI controller and its percussion pads too. The library then began growing into a general representation of the specification(s) from there.
+
 ## Table of Contents
 
    * [Installation](#installation)
