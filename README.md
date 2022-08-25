@@ -29,8 +29,8 @@ go get https://github.com/matthewfritz/go-midi
 
 #### Channel Voice Messages
 
-   * ✅ Note-On
-   * ✅ Note-Off
+   * ✅ [Note-On](https://github.com/matthewfritz/go-midi/issues/3)
+   * ✅ [Note-Off](https://github.com/matthewfritz/go-midi/issues/4)
    * Polyphonic Key Pressure
    * Channel Pressure
    * Program Change
@@ -39,8 +39,8 @@ go get https://github.com/matthewfritz/go-midi
 
 #### Channel Voice Message Modifiers
 
-   * ✅ Velocity
-   * ✅ Running Status
+   * ✅ [Velocity](https://github.com/matthewfritz/go-midi/issues/2)
+   * ✅ [Running Status](https://github.com/matthewfritz/go-midi/issues/20)
    * Pitch
    * Modulation
 
