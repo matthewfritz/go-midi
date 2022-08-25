@@ -65,7 +65,7 @@ func Test_MakeStatusByte(t *testing.T) {
 		expected      byte
 	}{
 		"status byte is expected value": {
-			statusNibble:  Status(0b10010000),
+			statusNibble:  Status(0b10010000), // Note-On message
 			channelNibble: Channel(5),
 			expected:      0b10010101,
 		},
