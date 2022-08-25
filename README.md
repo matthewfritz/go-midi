@@ -22,7 +22,7 @@ I had been trying to solve a very specific problem I was having with a hardware 
 ## Installation
 
 ```
-go get https://github.com/matthewfritz/go-midi
+go get github.com/matthewfritz/go-midi
 ```
 
 ## Roadmap
