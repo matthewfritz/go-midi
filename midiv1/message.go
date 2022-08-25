@@ -5,51 +5,7 @@ import (
 	"fmt"
 )
 
-// MessageMarshaler represents MIDI message data that can be marshalled.
-type MessageMarshaler interface {
-	// MarshalMIDI marshalls a MIDI message into its raw bytes.
-	MarshalMIDI() ([]byte, error)
-}
-
-// MessageUnmarshaler represents MIDI message data that can be unmarshalled.
-type MessageUnmarshaler interface {
-	// UnmarshalMIDI unmarshalls raw bytes into a MIDI message.
-	UnmarshalMIDI(b []byte) error
-}
-
-// MessageBuilder represents MIDI message data that can be both marshalled and unmarshalled.
-type MessageBuilder interface {
-	MessageMarshaler
-	MessageUnmarshaler
-}
-
-// RunningStatusMessageMarshaler represents running status MIDI message data that can be marshalled.
-type RunningStatusMessageMarshaler interface {
-	// MarshalRunningStatusMIDI marshalls a running status MIDI message into its raw bytes.
-	MarshalRunningStatusMIDI() ([]byte, error)
-}
-
-// RunningStatusMessageUnmarshaler represents running status MIDI message data that can be unmarshalled.
-type RunningStatusMessageUnmarshaler interface {
-	// UnmarshalRunningStatusMIDI unmarshalls raw bytes into a running status MIDI message.
-	UnmarshalRunningStatusMIDI(b []byte) error
-}
-
-// RunningStatusMessageBuilder represents running status MIDI message data that can be both marshalled and unmarshalled.
-type RunningStatusMessageBuilder interface {
-	RunningStatusMessageMarshaler
-	RunningStatusMessageUnmarshaler
-}
-
-var (
-	// ErrMarshallingMessage represents an error marshalling a MIDI message.
-	ErrMarshallingMessage error = errors.New("error marshalling MIDI message")
-
-	// ErrUnmarshallingMessage represents an error unmarshalling a MIDI message.
-	ErrUnmarshallingMessage error = errors.New("error unmarshalling MIDI message")
-)
-
-// Nibble represents a set of four bits within a byte
+// Nibble represents a set of four bits within a byte.
 type Nibble byte
 
 // MessageType represents the type of MIDI message by setting only the MSB of the byte.
@@ -79,7 +35,7 @@ func ByteHasStatusMSB(b byte) bool {
 // Example: 0b11010000 (Status message for Channel Pressure)
 type Status Nibble
 
-// MakeStatus creates and returns a MIDI message status byte by OR-ing the status and channel nibbles.
+// MakeStatusByte creates and returns a MIDI message status byte by OR-ing the status and channel nibbles.
 func MakeStatusByte(statusNibble Status, channelNibble Channel) byte {
 	return byte(statusNibble) | byte(channelNibble)
 }
