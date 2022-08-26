@@ -33,7 +33,7 @@ go get github.com/matthewfritz/go-midi
 
    * ✅ [Note-On](https://github.com/matthewfritz/go-midi/issues/3)
    * ✅ [Note-Off](https://github.com/matthewfritz/go-midi/issues/4)
-   * Polyphonic Key Pressure
+   * ✅ [Polyphonic Key Pressure](https://github.com/matthewfritz/go-midi/issues/5)
    * Channel Pressure
    * Program Change
    * Pitch Bend Change
