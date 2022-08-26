@@ -13,7 +13,7 @@ const (
 	PolyphonicKeyPressureMessageStatusNibble Status = Status(StatusMessageMSB) | Status(PolyphonicKeyPressureMessageCode)
 )
 
-// PolyphonicKeyPressureMessage represents a Note-On Channel Voice message.
+// PolyphonicKeyPressureMessage represents a Polyphonic Key Pressure Channel Voice message.
 type PolyphonicKeyPressureMessage struct {
 	// Channel represents the channel number where this message will be sent.
 	Channel Channel
@@ -82,12 +82,12 @@ func (pkpm *PolyphonicKeyPressureMessage) UnmarshalMIDI(b []byte) error {
 	return nil
 }
 
-// UnmarshalRunningStatusMIDI unmarshalls raw bytes into a PolyphonicKeyPressureMessage struct pointer. Note-On running status messages are
-// represented by two bytes (left to right): note number, note velocity.
+// UnmarshalRunningStatusMIDI unmarshalls raw bytes into a PolyphonicKeyPressureMessage struct pointer. Polyphonic Key Pressure running status messages are
+// represented by two bytes (left to right): note number, note pressure.
 //
 // Example: []byte{0b01000000, 0b00100000}
 //
-// The example forms a Note-On running status message for note number 64, velocity value 32.
+// The example forms a Note-On running status message for note number 64, pressure value 32.
 func (pkpm *PolyphonicKeyPressureMessage) UnmarshalRunningStatusMIDI(b []byte) error {
 	// check the number of bytes in the running status message
 	if len(b) != PolyphonicKeyPressureMessageLength-1 {
