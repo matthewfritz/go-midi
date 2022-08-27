@@ -1,10 +1,5 @@
 package midiv1
 
-import (
-	"errors"
-	"fmt"
-)
-
 const (
 	// MinPitchBend represents the value of the lowest pitch bend.
 	MinPitchBend PitchBend = -8192
@@ -22,17 +17,20 @@ const (
 // PitchBend is only used in conjunction with Pitch Bend Channel Voice messages.
 type PitchBend int16
 
-var (
-	// ErrInvalidPitchBend represents an invalid MIDI pitch bend value.
-	ErrInvalidPitchBend error = errors.New("invalid MIDI pitch bend")
-)
-
 // NewPitchBend returns a PitchBend instance from an integer value.
-func NewPitchBend(pitchBend int) (PitchBend, error) {
-	if pitchBend < int(MinPitchBend) || pitchBend > int(MaxPitchBend) {
-		return ZeroPitchBend, fmt.Errorf("valid pitch bend is between %d and %d, inclusive: %w", MinPitchBend, MaxPitchBend, ErrInvalidChannel)
+func NewPitchBend(pitchBend int) PitchBend {
+	if pitchBend < int(MinPitchBend) {
+		return MinPitchBend
 	}
-	return PitchBend(pitchBend), nil
+	if pitchBend > int(MaxPitchBend) {
+		return MaxPitchBend
+	}
+	return PitchBend(pitchBend)
+}
+
+// NewPitchBendFromBytes returns a PitchBend instance from a most-significant byte and a least-significant byte.
+func NewPitchBendFromBytes(msb byte, lsb byte) PitchBend {
+	return NewPitchBend(int((int16(msb) << 8) | int16(lsb)))
 }
 
 // GetLSB returns the least-significant byte of the pitch bend value.
