@@ -37,12 +37,12 @@ func NewPitchBend(pitchBend int) (PitchBend, error) {
 
 // GetLSB returns the least-significant byte of the pitch bend value.
 func (pb PitchBend) GetLSB() byte {
-	return byte(pb & 0x00FF)
+	// https://stackoverflow.com/a/17260211
+	return byte(pb & 0xFF)
 }
 
 // GetMSB returns the most-significant byte of the pitch bend value.
 func (pb PitchBend) GetMSB() byte {
-	// 0x1F00 is the sum of all powers of 2 from 2^8 to 2^12 (right before 8192, which is 2^13)
-	// to denote the relative range of bits within the first byte of the 16-bit sequence
-	return byte(pb & 0x1F00 >> 8)
+	// https://stackoverflow.com/a/17260211
+	return byte(pb >> 8)
 }
