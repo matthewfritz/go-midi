@@ -36,14 +36,14 @@ go get github.com/matthewfritz/go-midi
    * ✅ [Polyphonic Key Pressure](https://github.com/matthewfritz/go-midi/issues/5)
    * ✅ [Channel Pressure](https://github.com/matthewfritz/go-midi/issues/6)
    * Program Change
-   * Pitch Bend Change
+   * ✅ [Pitch Bend Change](https://github.com/matthewfritz/go-midi/issues/8)
    * Control Change
 
 #### Channel Voice Message Modifiers
 
    * ✅ [Velocity](https://github.com/matthewfritz/go-midi/issues/2)
    * ✅ [Running Status](https://github.com/matthewfritz/go-midi/issues/20)
-   * Pitch
+   * ✅ [Pitch](https://github.com/matthewfritz/go-midi/issues/8)
    * Modulation
 
 #### System Common Messages
