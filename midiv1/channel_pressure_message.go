@@ -47,7 +47,7 @@ func (cpm ChannelPressureMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 //
 // Example: []byte{0b11010001, 0b01000000, 0b00100000}
 //
-// The example forms a Polyphonic Key Pressure message for channel 2 (index 1), note number 64, pressure value 32.
+// The example forms a Channel Pressure message for channel 2 (index 1), note number 64, pressure value 32.
 func (cpm *ChannelPressureMessage) UnmarshalMIDI(b []byte) error {
 	// check the number of bytes in the message
 	if len(b) != ChannelPressureMessageLength {
@@ -87,7 +87,7 @@ func (cpm *ChannelPressureMessage) UnmarshalMIDI(b []byte) error {
 //
 // Example: []byte{0b01000000, 0b00100000}
 //
-// The example forms a Note-On running status message for note number 64, pressure value 32.
+// The example forms a Channel Pressure running status message for note number 64, pressure value 32.
 func (cpm *ChannelPressureMessage) UnmarshalRunningStatusMIDI(b []byte) error {
 	// check the number of bytes in the running status message
 	if len(b) != ChannelPressureMessageLength-1 {

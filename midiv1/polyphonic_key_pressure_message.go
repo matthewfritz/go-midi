@@ -87,7 +87,7 @@ func (pkpm *PolyphonicKeyPressureMessage) UnmarshalMIDI(b []byte) error {
 //
 // Example: []byte{0b01000000, 0b00100000}
 //
-// The example forms a Note-On running status message for note number 64, pressure value 32.
+// The example forms a Polyphonic Key Pressure running status message for note number 64, pressure value 32.
 func (pkpm *PolyphonicKeyPressureMessage) UnmarshalRunningStatusMIDI(b []byte) error {
 	// check the number of bytes in the running status message
 	if len(b) != PolyphonicKeyPressureMessageLength-1 {
