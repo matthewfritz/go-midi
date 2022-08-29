@@ -8,23 +8,23 @@ import (
 	"testing"
 )
 
-func Test_PitchBendMessage_GetMessageName(t *testing.T) {
+func Test_PitchBendChangeMessage_GetMessageName(t *testing.T) {
 	t.Parallel()
-	message := PitchBendMessage{}
-	expected := "Pitch Bend"
+	message := PitchBendChangeMessage{}
+	expected := "Pitch Bend Change"
 	if message.GetMessageName() != expected {
 		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
 	}
 }
 
-func Test_PitchBendMessage_MarshalMIDI(t *testing.T) {
+func Test_PitchBendChangeMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
-		message  PitchBendMessage
+		message  PitchBendChangeMessage
 		expected []byte
 	}{
 		"message marshalls into expected bytes": {
-			message: PitchBendMessage{
+			message: PitchBendChangeMessage{
 				Channel:   1,
 				PitchBend: 7650,
 			},
@@ -45,14 +45,14 @@ func Test_PitchBendMessage_MarshalMIDI(t *testing.T) {
 	}
 }
 
-func Test_PitchBendMessage_MarshalRunningStatusMIDI(t *testing.T) {
+func Test_PitchBendChangeMessage_MarshalRunningStatusMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
-		message  PitchBendMessage
+		message  PitchBendChangeMessage
 		expected []byte
 	}{
 		"running status message marshalls into expected bytes": {
-			message: PitchBendMessage{
+			message: PitchBendChangeMessage{
 				PitchBend: 7650,
 			},
 			expected: []byte{0b11100010, 0b00011101},
@@ -72,23 +72,23 @@ func Test_PitchBendMessage_MarshalRunningStatusMIDI(t *testing.T) {
 	}
 }
 
-func Test_PitchBendMessage_String(t *testing.T) {
+func Test_PitchBendChangeMessage_String(t *testing.T) {
 	t.Parallel()
-	message := PitchBendMessage{
+	message := PitchBendChangeMessage{
 		Channel:   1,
 		PitchBend: 7650,
 	}
-	expected := fmt.Sprintf("%s:%s:%d:%d", MessageVersion, "Pitch Bend", 1, 7650)
+	expected := fmt.Sprintf("%s:%s:%d:%d", MessageVersion, "Pitch Bend Change", 1, 7650)
 	if message.String() != expected {
 		t.Fatalf("expected %s, got %s", expected, message.String())
 	}
 }
 
-func Test_PitchBendMessage_UnmarshalMIDI(t *testing.T) {
+func Test_PitchBendChangeMessage_UnmarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
 		b               []byte
-		expectedMessage PitchBendMessage
+		expectedMessage PitchBendChangeMessage
 		err             error
 	}{
 		"byte slice is not proper length": {
@@ -101,7 +101,7 @@ func Test_PitchBendMessage_UnmarshalMIDI(t *testing.T) {
 		},
 		"bytes unmarshal into expected message": {
 			b: []byte{0b11010001, 0b11100010, 0b00011101},
-			expectedMessage: PitchBendMessage{
+			expectedMessage: PitchBendChangeMessage{
 				Channel:   1,
 				PitchBend: 7650,
 			},
@@ -110,7 +110,7 @@ func Test_PitchBendMessage_UnmarshalMIDI(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			var got PitchBendMessage
+			var got PitchBendChangeMessage
 			err := (&got).UnmarshalMIDI(test.b)
 			if test.err == nil && err != nil {
 				t.Fatalf("expected nil error, got %v", err)
@@ -130,11 +130,11 @@ func Test_PitchBendMessage_UnmarshalMIDI(t *testing.T) {
 	}
 }
 
-func Test_PitchBendMessage_UnmarshalRunningStatusMIDI(t *testing.T) {
+func Test_PitchBendChangeMessage_UnmarshalRunningStatusMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
 		b               []byte
-		expectedMessage PitchBendMessage
+		expectedMessage PitchBendChangeMessage
 		err             error
 	}{
 		"byte slice is not proper length": {
@@ -143,7 +143,7 @@ func Test_PitchBendMessage_UnmarshalRunningStatusMIDI(t *testing.T) {
 		},
 		"bytes unmarshal into expected message": {
 			b: []byte{0b11100010, 0b00011101},
-			expectedMessage: PitchBendMessage{
+			expectedMessage: PitchBendChangeMessage{
 				PitchBend: 7650,
 			},
 		},
@@ -151,7 +151,7 @@ func Test_PitchBendMessage_UnmarshalRunningStatusMIDI(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			var got PitchBendMessage
+			var got PitchBendChangeMessage
 			err := (&got).UnmarshalRunningStatusMIDI(test.b)
 			if test.err == nil && err != nil {
 				t.Fatalf("expected nil error, got %v", err)
