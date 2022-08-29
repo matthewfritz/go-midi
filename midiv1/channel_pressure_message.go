@@ -25,6 +25,11 @@ type ChannelPressureMessage struct {
 	Pressure Pressure
 }
 
+// GetMessageName returns the name of this Channel Pressure message.
+func (cpm *ChannelPressureMessage) GetMessageName() string {
+	return "Channel Pressure"
+}
+
 // MarshalMIDI marshalls a ChannelPressureMessage MIDI message into its raw bytes
 func (cpm ChannelPressureMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{
@@ -40,6 +45,11 @@ func (cpm ChannelPressureMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 		byte(cpm.Note),
 		byte(cpm.Pressure),
 	}, nil
+}
+
+// String returns the human-readable representation of the MIDI message.
+func (cpm *ChannelPressureMessage) String() string {
+	return fmt.Sprintf(MessageStringFormat, MessageVersion, cpm.GetMessageName(), cpm.Channel, cpm.Note, cpm.Pressure)
 }
 
 // UnmarshalMIDI unmarshalls raw bytes into a ChannelPressureMessage struct pointer. Channel Pressure messages are

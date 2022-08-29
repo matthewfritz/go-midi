@@ -3,9 +3,19 @@ package midiv1
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"reflect"
 	"testing"
 )
+
+func Test_PitchBendMessage_GetMessageName(t *testing.T) {
+	t.Parallel()
+	message := PitchBendMessage{}
+	expected := "Pitch Bend"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
 
 func Test_PitchBendMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
@@ -59,6 +69,18 @@ func Test_PitchBendMessage_MarshalRunningStatusMIDI(t *testing.T) {
 				t.Fatalf("expected %#v, got %#v", test.expected, got)
 			}
 		})
+	}
+}
+
+func Test_PitchBendMessage_String(t *testing.T) {
+	t.Parallel()
+	message := PitchBendMessage{
+		Channel:   1,
+		PitchBend: 7650,
+	}
+	expected := fmt.Sprintf("%s:%s:%d:%d", MessageVersion, "Pitch Bend", 1, 7650)
+	if message.String() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.String())
 	}
 }
 

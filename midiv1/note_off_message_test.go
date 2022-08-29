@@ -3,9 +3,19 @@ package midiv1
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"reflect"
 	"testing"
 )
+
+func Test_NotOffMessage_GetMessageName(t *testing.T) {
+	t.Parallel()
+	message := NoteOffMessage{}
+	expected := "Note-Off"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
 
 func Test_NoteOffMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
@@ -61,6 +71,19 @@ func Test_NoteOffMessage_MarshalRunningStatusMIDI(t *testing.T) {
 				t.Fatalf("expected %#v, got %#v", test.expected, got)
 			}
 		})
+	}
+}
+
+func Test_NoteOffMessage_String(t *testing.T) {
+	t.Parallel()
+	message := NoteOffMessage{
+		Channel:  1,
+		Note:     64,
+		Velocity: 32,
+	}
+	expected := fmt.Sprintf("%s:%s:%d:%d:%d", MessageVersion, "Note-Off", 1, 64, 32)
+	if message.String() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.String())
 	}
 }
 
