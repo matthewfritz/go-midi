@@ -25,6 +25,11 @@ type NoteOnMessage struct {
 	Velocity Velocity
 }
 
+// GetMessageName returns the name of this Note-On message.
+func (nom *NoteOnMessage) GetMessageName() string {
+	return "Note-On"
+}
+
 // MarshalMIDI marshalls a NoteOnMessage MIDI message into its raw bytes
 func (nom NoteOnMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{

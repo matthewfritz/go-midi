@@ -22,6 +22,11 @@ type PitchBendMessage struct {
 	PitchBend PitchBend
 }
 
+// GetMessageName returns the name of this Pitch Bend message.
+func (pbm *PitchBendMessage) GetMessageName() string {
+	return "Pitch Bend"
+}
+
 // MarshalMIDI marshalls a PitchBendMessage MIDI message into its raw bytes
 func (pbm PitchBendMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{

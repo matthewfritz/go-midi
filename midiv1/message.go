@@ -5,6 +5,12 @@ import (
 	"fmt"
 )
 
+// Message represents a MIDI 1.0 message.
+type Message interface {
+	// GetMessageName returns the human-readable name of the MIDI 1.0 message.
+	GetMessageName() string
+}
+
 // Nibble represents a set of four bits within a byte.
 type Nibble byte
 

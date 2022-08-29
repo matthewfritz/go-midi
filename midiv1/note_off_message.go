@@ -85,6 +85,11 @@ func (nom *NoteOffMessage) UnmarshalMIDI(b []byte) error {
 	return nil
 }
 
+// GetMessageName returns the name of this Note-Off message.
+func (nom *NoteOffMessage) GetMessageName() string {
+	return "Note-Off"
+}
+
 // UnmarshalRunningStatusMIDI unmarshalls raw bytes into a NoteOffMessage struct pointer. Note-Off running status messages are
 // represented by two bytes (left to right): note number, note velocity.
 //

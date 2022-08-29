@@ -7,6 +7,14 @@ import (
 	"testing"
 )
 
+func Test_NoteOnMessage_GetMessageName(t *testing.T) {
+	message := NoteOnMessage{}
+	expected := "Note-On"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
+
 func Test_NoteOnMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {

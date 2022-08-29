@@ -7,6 +7,14 @@ import (
 	"testing"
 )
 
+func Test_ChannelPressureMessage_GetMessageName(t *testing.T) {
+	message := ChannelPressureMessage{}
+	expected := "Channel Pressure"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
+
 func Test_ChannelPressureMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {

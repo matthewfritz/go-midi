@@ -7,6 +7,14 @@ import (
 	"testing"
 )
 
+func Test_PitchBendMessage_GetMessageName(t *testing.T) {
+	message := PitchBendMessage{}
+	expected := "Pitch Bend"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
+
 func Test_PitchBendMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {

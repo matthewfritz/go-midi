@@ -7,6 +7,14 @@ import (
 	"testing"
 )
 
+func Test_PolyphonicKeyPressureMessage_GetMessageName(t *testing.T) {
+	message := PolyphonicKeyPressureMessage{}
+	expected := "Polyphonic Key Pressure"
+	if message.GetMessageName() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.GetMessageName())
+	}
+}
+
 func Test_PolyphonicKeyPressureMessage_MarshalMIDI(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {

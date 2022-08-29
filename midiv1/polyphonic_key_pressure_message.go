@@ -25,6 +25,11 @@ type PolyphonicKeyPressureMessage struct {
 	Pressure Pressure
 }
 
+// GetMessageName returns the name of this Polyphonic Key Pressure message.
+func (pkpm *PolyphonicKeyPressureMessage) GetMessageName() string {
+	return "Polyphonic Key Pressure"
+}
+
 // MarshalMIDI marshalls a PolyphonicKeyPressureMessage MIDI message into its raw bytes
 func (pkpm PolyphonicKeyPressureMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{
