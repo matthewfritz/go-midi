@@ -47,6 +47,11 @@ func (pkpm PolyphonicKeyPressureMessage) MarshalRunningStatusMIDI() ([]byte, err
 	}, nil
 }
 
+// String returns the human-readable representation of the MIDI message.
+func (pkpm *PolyphonicKeyPressureMessage) String() string {
+	return fmt.Sprintf(MessageStringFormat, MessageVersion, pkpm.GetMessageName(), pkpm.Channel, pkpm.Note, pkpm.Pressure)
+}
+
 // UnmarshalMIDI unmarshalls raw bytes into a PolyphonicKeyPressureMessage struct pointer. Polyphonic Key Pressure messages are
 // represented by three bytes (left to right): status/channel, note number, note pressure.
 //

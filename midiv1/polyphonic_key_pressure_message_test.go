@@ -3,11 +3,13 @@ package midiv1
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"reflect"
 	"testing"
 )
 
 func Test_PolyphonicKeyPressureMessage_GetMessageName(t *testing.T) {
+	t.Parallel()
 	message := PolyphonicKeyPressureMessage{}
 	expected := "Polyphonic Key Pressure"
 	if message.GetMessageName() != expected {
@@ -69,6 +71,19 @@ func Test_PolyphonicKeyPressureMessage_MarshalRunningStatusMIDI(t *testing.T) {
 				t.Fatalf("expected %#v, got %#v", test.expected, got)
 			}
 		})
+	}
+}
+
+func Test_PolyphonicKeyPressureMessage_String(t *testing.T) {
+	t.Parallel()
+	message := PolyphonicKeyPressureMessage{
+		Channel:  1,
+		Note:     64,
+		Pressure: 32,
+	}
+	expected := fmt.Sprintf("%s:%s:%d:%d:%d", MessageVersion, "Polyphonic Key Pressure", 1, 64, 32)
+	if message.String() != expected {
+		t.Fatalf("expected %s, got %s", expected, message.String())
 	}
 }
 

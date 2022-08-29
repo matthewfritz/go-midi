@@ -47,6 +47,11 @@ func (nom NoteOnMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 	}, nil
 }
 
+// String returns the human-readable representation of the MIDI message.
+func (nom *NoteOnMessage) String() string {
+	return fmt.Sprintf(MessageStringFormat, MessageVersion, nom.GetMessageName(), nom.Channel, nom.Note, nom.Velocity)
+}
+
 // UnmarshalMIDI unmarshalls raw bytes into a NoteOnMessage struct pointer. Note-On messages are
 // represented by three bytes (left to right): status/channel, note number, note velocity.
 //

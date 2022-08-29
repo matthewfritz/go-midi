@@ -47,6 +47,11 @@ func (cpm ChannelPressureMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 	}, nil
 }
 
+// String returns the human-readable representation of the MIDI message.
+func (cpm *ChannelPressureMessage) String() string {
+	return fmt.Sprintf(MessageStringFormat, MessageVersion, cpm.GetMessageName(), cpm.Channel, cpm.Note, cpm.Pressure)
+}
+
 // UnmarshalMIDI unmarshalls raw bytes into a ChannelPressureMessage struct pointer. Channel Pressure messages are
 // represented by three bytes (left to right): status/channel, note number, note pressure.
 //

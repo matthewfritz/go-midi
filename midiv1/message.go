@@ -11,6 +11,14 @@ type Message interface {
 	GetMessageName() string
 }
 
+const (
+	// MessageStringFormat is the printf-compatible format for the string representation of a message.
+	MessageStringFormat string = "%s:%s:%d:%d:%d"
+
+	// MessageVersion represents the MIDI version string for messages.
+	MessageVersion string = "MIDI 1.0"
+)
+
 // Nibble represents a set of four bits within a byte.
 type Nibble byte
 

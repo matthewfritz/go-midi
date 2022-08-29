@@ -11,6 +11,9 @@ const (
 
 	// PitchBendMessageStatusNibble represents the status nibble within the status byte
 	PitchBendMessageStatusNibble Status = Status(StatusMessageMSB) | Status(PitchBendMessageCode)
+
+	// PitchBendMessageStringFormat represents the printf-compatible format specifically for a Pitch Bend message string.
+	PitchBendMessageStringFormat string = "%s:%s:%d:%d"
 )
 
 // PitchBendMessage represents a Pitch Bend Channel Voice message.
@@ -42,6 +45,11 @@ func (pbm PitchBendMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 		pbm.PitchBend.GetLSB(),
 		pbm.PitchBend.GetMSB(),
 	}, nil
+}
+
+// String returns the human-readable representation of the MIDI message.
+func (pbm *PitchBendMessage) String() string {
+	return fmt.Sprintf(PitchBendMessageStringFormat, MessageVersion, pbm.GetMessageName(), pbm.Channel, pbm.PitchBend)
 }
 
 // UnmarshalMIDI unmarshalls raw bytes into a PitchBendMessage struct pointer. Pitch Bend messages are

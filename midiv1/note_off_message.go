@@ -28,6 +28,11 @@ type NoteOffMessage struct {
 	Velocity Velocity
 }
 
+// GetMessageName returns the name of this Note-Off message.
+func (nom *NoteOffMessage) GetMessageName() string {
+	return "Note-Off"
+}
+
 // MarshalMIDI marshalls a NoteOffMessage MIDI message into its raw bytes
 func (nom NoteOffMessage) MarshalMIDI() ([]byte, error) {
 	return []byte{
@@ -43,6 +48,11 @@ func (nom NoteOffMessage) MarshalRunningStatusMIDI() ([]byte, error) {
 		byte(nom.Note),
 		byte(nom.Velocity),
 	}, nil
+}
+
+// String returns the human-readable representation of the MIDI message.
+func (nom *NoteOffMessage) String() string {
+	return fmt.Sprintf(MessageStringFormat, MessageVersion, nom.GetMessageName(), nom.Channel, nom.Note, nom.Velocity)
 }
 
 // UnmarshalMIDI unmarshalls raw bytes into a NoteOffMessage struct pointer. Note-Off messages are
@@ -83,11 +93,6 @@ func (nom *NoteOffMessage) UnmarshalMIDI(b []byte) error {
 		Velocity: vel,
 	}
 	return nil
-}
-
-// GetMessageName returns the name of this Note-Off message.
-func (nom *NoteOffMessage) GetMessageName() string {
-	return "Note-Off"
 }
 
 // UnmarshalRunningStatusMIDI unmarshalls raw bytes into a NoteOffMessage struct pointer. Note-Off running status messages are
